@@ -1,0 +1,16 @@
+{% extends 'layout.html' %}
+{% block body %}
+<div class="container container_size">
+    <p class="text-center text-heading">URL Shortener</p>
+    <div class="card bg-success" style="width:330px; margin:0 auto">
+        <form action="http://localhost:5000/urlShort" method="POST">
+            <div class="input-group urlBox">
+                <input type="text" class="form-control" name="textURL">
+                <span class="input-group-btn">
+                    <button class="btn btn-success" type="submit">Short URL</button>
+                </span>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
