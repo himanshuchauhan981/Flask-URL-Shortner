@@ -1,0 +1,72 @@
+{% extends 'layout.html' %}
+{% block body %}
+<div class="container container_size">
+    <div class="card" style="width:330px; margin:0 auto">
+
+        <form action="http://localhost:5000/registration" method="POST" name="myForm" novalidate>
+            {{ form.hidden_tag() }}
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+            {% endwith %}
+            <p class="text-center heading">Sign Up</p>
+
+
+            {% if form.username.errors %}
+                {% for error in form.username.errors %}
+                    <p class="errorSize">{{ error }}</p>
+                {% endfor %}
+                <div class="form-group has-error">
+                    {{ form.username(class="form-control username",placeholder="Username") }}
+                </div>
+            {% else %}
+                {{ form.username(class="form-control username",placeholder="Username") }}
+            {% endif %}
+
+
+            {% if form.mobNum.errors %}
+                {% for error in form.mobNum.errors %}
+                    <p class="errorSize">{{ error }}</p>
+                {% endfor %}
+                <div class="form-group has-error">
+                    {{ form.mobNum(class="form-control username w3-margin-top",placeholder="Mobile Number") }}
+                </div>
+            {% else %}
+                {{ form.mobNum(class="form-control username w3-margin-top",placeholder="Mobile Number") }}
+            {% endif %}
+
+
+            {% if form.pwd.errors %}
+                {% for error in form.pwd.errors %}
+                    <p class="errorSize">{{ error }}</p>
+                {% endfor %}
+                <div class="form-group has-error">
+                    {{ form.pwd(class="form-control username w3-margin-top",placeholder="Password") }}
+                </div>
+            {% else %}
+                {{ form.pwd(class="form-control username w3-margin-top",placeholder="Password") }}
+            {% endif %}
+
+
+            {% if form.confirmPassword.errors %}
+                {% for error in form.confirmPassword.errors %}
+                    <p class="errorSize">{{ error }}</p>
+                {% endfor %}
+                <div class="form-group has-error">
+                    {{ form.confirmPassword(class="form-control username w3-margin-top",placeholder="Confirm Password") }}
+                </div>
+            {% else %}
+                {{ form.confirmPassword(class="form-control username w3-margin-top",placeholder="Confirm Password") }}
+            {% endif %}
+
+            {{ form.submitForm(class="btn btn-lg btn-primary btn-block w3-margin-top") }}
+
+        </form>
+    </div>
+</div>
+{% endblock %}
