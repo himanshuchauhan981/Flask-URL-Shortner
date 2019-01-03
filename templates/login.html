@@ -1,0 +1,50 @@
+{% extends 'layout.html' %}
+{% block body %}
+<div class="container container_size">
+    <div class="card" style="width:330px; margin:0 auto">
+
+        <form action="http://localhost:5000/loginUser" method="POST" name="myForm" novalidate>
+            {{ loginForm.hidden_tag() }}
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+            {% endwith %}
+            <p class="text-center heading">Login</p>
+
+
+            {% if loginForm.username.errors %}
+                {% for error in loginForm.username.errors %}
+                    <p class="errorSize">{{ error }}</p>
+                {% endfor %}
+                <div class="form-group has-error">
+                    {{ loginForm.username(class="form-control username",placeholder="Username") }}
+                </div>
+            {% else %}
+                {{ loginForm.username(class="form-control username",placeholder="Username") }}
+            {% endif %}
+
+
+            {% if loginForm.pwd.errors %}
+                {% for error in loginForm.pwd.errors %}
+                    <p class="errorSize">{{ error }}</p>
+                {% endfor %}
+                <div class="form-group has-error">
+                    {{ loginForm.pwd(class="form-control username w3-margin-top",placeholder="Password") }}
+                </div>
+            {% else %}
+                {{ loginForm.pwd(class="form-control username w3-margin-top",placeholder="Password") }}
+            {% endif %}
+
+
+            {{ loginForm.submitLogin(class="btn btn-lg btn-primary btn-block w3-margin-top") }}
+
+        </form>
+    </div>
+</div>
+
+{% endblock %}
