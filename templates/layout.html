@@ -16,21 +16,27 @@
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" href="{{ url_for('urlShortener') }}">URL Shortener</a>
+                <a class="navbar-brand" href="#">URL Shortener</a>
             </div>
+            {% if heading == 'URLShortener' and session['username'] %}
             <ul class="nav navbar-nav">
-                {% if heading == 'Login - URLShortener' %}
-                    <li><a href="{{ url_for('home') }}">Home</a></li>
-                    <li class="active"><a href="{{ url_for('login') }}">Login</a></li>
-                {% else %}
-                    <li class="active"><a href="{{ url_for('home') }}">Home</a></li>
-                    <li><a href="{{ url_for('login') }}">Login</a></li>
-                {% endif %}
+                <li class="active"><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('logoutUser') }}">Logout</a></li>
+                <li><a href="{{ url_for('viewSavedURLs') }}">View Saved URLs</a></li>
             </ul>
-            {% if current_user.is_authenticated %}
-                <ul class="nav navbar-nav navbar-right">
-                    <p class="navbar-text">Hi, Himanshu</p>
-                </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <p class="navbar-text">Hi {{ session['username'] }}</p>
+            </ul>
+            {% elif heading == 'Home - URLShortener' and not session['username'] %}
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('login') }}">Login</a></li>
+            </ul>
+            {% elif heading == 'Login - URLShortener' %}
+            <ul class="nav navbar-nav">
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li class="active"><a href="{{ url_for('login') }}">Login</a></li>
+            </ul>
             {% endif %}
         </div>
     </nav>
