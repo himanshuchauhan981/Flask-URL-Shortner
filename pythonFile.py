@@ -5,15 +5,15 @@ from wtforms.validators import DataRequired, Length
 from flask_pymongo import PyMongo
 import bitly_api
 
-API_USER = "bitlyuser0018"
-API_KEY = "R_bd9b0bff73df4a89a37780e38ed002ba"
+API_USER = "Insert your own Bitly Login Key or Login Name"
+API_KEY = "Insert your own Bitly API Key"
 
 app = Flask('__name__')
 app.secret_key = 'development key'
 app.jinja_env.filters['zip'] = zip
 
 app.config['MONGO_DBNAME'] = 'url_registration'
-app.config['MONGO_URI'] = 'mongodb://himanshuchauhan:himanshu0018@ds119024.mlab.com:19024/url_registration'
+app.config['MONGO_URI'] = 'mongodb://<dbuser>:<dbpassword>@ds119024.mlab.com:19024/url_registration'
 mongo = PyMongo(app)
 
 
