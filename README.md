@@ -27,6 +27,9 @@ In this project, user can save the shortened URL and can view those URL anytime 
 * After creating deployment, click on 'url_registration' deployment
 * Create two new Collections with name 'urlData' and 'urlRegisteration'
 
+mongodb://<dbuser>:<dbpassword>@ds119024.mlab.com:19024/url_registration
+## Instead of '<dbuser>' put your own MLab Username and in <dbpassword>, put your MLab Account Password
+
 ### Setup [Bitly](https://bitly.com/a/sign_up?utm_content=site-free-button&utm_source=organic&utm_medium=website&utm_campaign=null&utm_cta=site-free-button) Account
 * Create new account in Bitly
 * After logging into Bitly account,  Click on Setting box on top-right Corner
