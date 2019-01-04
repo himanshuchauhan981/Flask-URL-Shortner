@@ -13,4 +13,37 @@
         </form>
     </div>
 </div>
+{% if session['show_url'] %}
+    <div class="container-fluid">
+        <table class="table tableHeading w3-margin-top">
+            <thead>
+                <th scope="col">Shorten URLs</th>
+                <th scope="col">Long URLs</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ shorturl }}</td>
+                    <td>{{ longurl }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+{% elif session['savedURLs'] %}
+    <div class="container-fluid">
+        <table class="table tableHeading w3-margin-top">
+            <thead>
+                <th scope="col">Shorten URLs Show</th>
+                <th scope="col">Long URLs Show</th>
+            </thead>
+             <tbody>
+                {% for Short, Long in tuplelongURL|zip(tupleshortURL) %}
+                    <tr>
+                        <td>{{ Short }}</td>
+                        <td>{{ Long }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endif %}
 {% endblock %}
