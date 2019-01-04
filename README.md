@@ -5,16 +5,16 @@ In this project, user can save the shortened URL and can view those URL anytime 
 ## Required Packages
 # Install Some Necessary Packages and Softwares
 
-# 1) Install Flask Package
+###### 1) Install Flask Package
 * Type following command in CMD
     * pip install virtualenv
     * pip install Flask
-# 2) Install Flask WTForms Package
+2) Install Flask WTForms Package
 * Type following command in CMD
     * pip install flask-WTF
-# 3) Install Flask PyMongo Package
+3) Install Flask PyMongo Package
 * Type following command in CMD
     * pip install Flask-PyMongo
-# 4) Install Bitly API Package
+4) Install Bitly API Package
 * Type following command in CMD
     * pip install bitly_api
