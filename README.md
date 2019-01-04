@@ -9,12 +9,12 @@ In this project, user can save the shortened URL and can view those URL anytime 
 * Type following command in CMD
     * pip install virtualenv
     * pip install Flask
-2) Install Flask WTForms Package
+### 2) Install Flask WTForms Package
 * Type following command in CMD
     * pip install flask-WTF
-3) Install Flask PyMongo Package
+### 3) Install Flask PyMongo Package
 * Type following command in CMD
     * pip install Flask-PyMongo
-4) Install Bitly API Package
+### 4) Install Bitly API Package
 * Type following command in CMD
     * pip install bitly_api
