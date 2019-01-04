@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for, flash, request
+from flask import Flask, render_template, redirect, url_for, flash, request, session
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, validators
 from wtforms.validators import DataRequired, Length
@@ -10,6 +10,7 @@ API_KEY = "R_bd9b0bff73df4a89a37780e38ed002ba"
 
 app = Flask('__name__')
 app.secret_key = 'development key'
+app.jinja_env.filters['zip'] = zip
 
 app.config['MONGO_DBNAME'] = 'url_registration'
 app.config['MONGO_URI'] = 'mongodb://himanshuchauhan:himanshu0018@ds119024.mlab.com:19024/url_registration'
@@ -45,7 +46,8 @@ def registrationValidation(username, pwd, mobNum):
         user = mongo.db.urlRegisteration
         user.insert({'username': username, 'password': pwd, 'Mobile Number': mobNum})
         flash(f'Account is successfully created', 'success')
-        return 'Data is added'
+        session['username'] = username
+        return redirect(url_for('urlShortener'))
     return render_template('home.html', form=form, heading='Home - URLShortener')
 
 
@@ -59,12 +61,6 @@ def registration():
         return redirect(url_for('registrationValidation', username=username, mobNum=mobNum, pwd=pwd))
     else:
         return render_template('home.html', form=form, heading='Home - URLShortener')
-
-
-@app.route('/login')
-def login():
-    loginForm = LoginForm()
-    return render_template('login.html', loginForm=loginForm, heading='Login - URLShortener')
 
 
 @app.route('/loginUser', methods=['GET', 'POST'])
@@ -87,14 +83,10 @@ def loginUserCheck(username, pwd):
         dataDict = data
     if dataDict:
         if dataDict['password'] == pwd:
+            session['username'] = username
             return redirect(url_for('urlShortener', heading="URLShortener"))
     flash('Username or Password is Incorrect', 'danger')
     return render_template('login.html', loginForm=loginForm, heading='Login - URLShortener')
-
-
-@app.route('/urlShortener')
-def urlShortener():
-    return render_template('URL_Shortener.html', heading='URLShortener')
 
 
 @app.route('/urlShort', methods=['GET', 'POST'])
@@ -104,20 +96,60 @@ def urlShort():
     else:
         urlText = request.args.get('textURL')
 
+    session['show_url'] = 'show_url_on'
+
     bitly = bitly_api.Connection(API_USER, API_KEY)
     response = bitly.shorten(urlText)
     shorturl = response["url"]
     longurl = response["long_url"]
+    user = mongo.db.urlData
+    data = mongo.db.urlData.find_one({'Username': session['username'], 'Long URL': longurl})
+    if not data:
+        user.insert({'Username': session['username'], 'Short URL': shorturl, 'Long URL': longurl})
+    return render_template('URL_Shortener.html', heading='URLShortener', shorturl=shorturl, longurl=longurl)
+
+
+@app.route('/logoutUser')
+def logoutUser():
+    session.pop('username', None)
+    session.pop('show_url', None)
+    session.pop('savedURLs', None)
+    return redirect(url_for('home'))
+
+
+@app.route('/viewSavedURLs')
+def viewSavedURLs():
+    longURL = []
+    shortURL = []
+    session.pop('show_url', None)
+    session['savedURLs'] = 'view'
+    data = mongo.db.urlData.find()
+    for items in data:
+        if items['Username'] == session['username']:
+            longURL.append(items['Short URL'])
+            shortURL.append(items['Long URL'])
+    tuplelongURL = tuple(longURL)
+    tupleshortURL = tuple(shortURL)
+    length = len(longURL)
+    return render_template('URL_Shortener.html', heading='URLShortener', tuplelongURL=tuplelongURL, tupleshortURL=tupleshortURL, length=length)
+
+
+@app.route('/login')
+def login():
     loginForm = LoginForm()
-    print(loginForm.returnUsername())
-    return '0', 204
+    return render_template('login.html', loginForm=loginForm, heading='Login - URLShortener')
+
+
+@app.route('/urlShortener')
+def urlShortener():
+    return render_template('URL_Shortener.html', heading='URLShortener')
 
 
 @app.route('/home')
 @app.route('/')
 def home():
     form = RegistrationForm()
-    return render_template('home.html', form=form, heading='URLShortener')
+    return render_template('home.html', form=form, heading='Home - URLShortener')
 
 
 if __name__ == '__main__':
