@@ -18,3 +18,19 @@ In this project, user can save the shortened URL and can view those URL anytime 
 ### 4) Install Bitly API Package
 * Type following command in CMD
     * pip install bitly_api
+
+## Important Steps
+
+### Setup [MLab](https://mlab.com/signup/) Account
+* Create new account in Mlab
+* After logging into MLab account, create new deployment with name 'url_registration'
+* After creating deployment, click on 'url_registration' deployment
+* Create two new Collections with name 'urlData' and 'urlRegisteration'
+
+### Setup [Bitly](https://bitly.com/a/sign_up?utm_content=site-free-button&utm_source=organic&utm_medium=website&utm_campaign=null&utm_cta=site-free-button) Account
+* Create new account in Bitly
+* After logging into Bitly account,  Click on Setting box on top-right Corner
+* Click on Setting
+* Click on Advance Setting
+* Click on API Support
+* Now copy both Login Key and API Key. These Keys are required in Python File as 'API_USER' and 'API_KEY'
