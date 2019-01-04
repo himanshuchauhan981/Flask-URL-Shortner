@@ -5,7 +5,7 @@ In this project, user can save the shortened URL and can view those URL anytime 
 ## Required Packages
 # Install Some Necessary Packages and Softwares
 
-###### 1) Install Flask Package
+### 1) Install Flask Package
 * Type following command in CMD
     * pip install virtualenv
     * pip install Flask
